@@ -1,0 +1,129 @@
+[
+  {
+    "id": 1,
+    "name": "National Scholarship Support",
+    "type": "scholarship",
+    "description": "Financial support for eligible students pursuing higher education.",
+    "criteria": {
+      "age_max": 30,
+      "income_max": 300000,
+      "education": ["intermediate", "diploma", "graduate", "postgraduate"],
+      "occupation": ["student"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban", "rural"]
+    },
+    "guidance": "Students meeting the income and education conditions can explore scholarship application options."
+  },
+  {
+    "id": 2,
+    "name": "Rural Skill Development Program",
+    "type": "skill",
+    "description": "Skill-development support for people seeking employment opportunities.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 45,
+      "income_max": 500000,
+      "education": ["school", "intermediate", "diploma", "graduate"],
+      "occupation": ["unemployed", "worker", "farmer"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["rural"]
+    },
+    "guidance": "Applicants with a rural profile can explore skill-development and employment-training opportunities."
+  },
+  {
+    "id": 3,
+    "name": "Youth Employment Support",
+    "type": "job",
+    "description": "Employment-oriented opportunity for young job seekers.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 35,
+      "income_max": 500000,
+      "education": ["intermediate", "diploma", "graduate", "postgraduate"],
+      "occupation": ["unemployed", "student"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban", "rural"]
+    },
+    "guidance": "Young applicants who are students or currently unemployed can explore suitable employment opportunities."
+  },
+  {
+    "id": 4,
+    "name": "Farmer Welfare Assistance",
+    "type": "welfare",
+    "description": "Support opportunity for eligible farming households.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 65,
+      "income_max": 600000,
+      "education": ["school", "intermediate", "diploma", "graduate", "postgraduate"],
+      "occupation": ["farmer"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["rural"]
+    },
+    "guidance": "Applicants working in agriculture and living in rural areas can explore farmer-focused welfare assistance."
+  },
+  {
+    "id": 5,
+    "name": "Higher Education Support",
+    "type": "scholarship",
+    "description": "Educational support for students continuing higher studies.",
+    "criteria": {
+      "age_min": 17,
+      "age_max": 30,
+      "income_max": 800000,
+      "education": ["graduate", "postgraduate"],
+      "occupation": ["student"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban", "rural"]
+    },
+    "guidance": "Students pursuing graduation or postgraduate studies can explore higher-education assistance."
+  },
+  {
+    "id": 6,
+    "name": "Urban Employment Assistance",
+    "type": "job",
+    "description": "Employment-oriented support for eligible urban job seekers.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 40,
+      "income_max": 400000,
+      "education": ["school", "intermediate", "diploma", "graduate"],
+      "occupation": ["unemployed", "worker", "self-employed"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban"]
+    },
+    "guidance": "Urban applicants seeking employment can explore suitable employment-support opportunities."
+  },
+  {
+    "id": 7,
+    "name": "Government Competitive Examination Support",
+    "type": "exam",
+    "description": "Support opportunity for candidates preparing for competitive examinations.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 35,
+      "income_max": 600000,
+      "education": ["graduate", "postgraduate"],
+      "occupation": ["student", "unemployed"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban", "rural"]
+    },
+    "guidance": "Graduates preparing for government competitive examinations can explore examination-support opportunities."
+  },
+  {
+    "id": 8,
+    "name": "Low Income Family Welfare Support",
+    "type": "welfare",
+    "description": "General welfare-support opportunity for low-income households.",
+    "criteria": {
+      "age_min": 18,
+      "age_max": 60,
+      "income_max": 300000,
+      "education": ["school", "intermediate", "diploma", "graduate", "postgraduate"],
+      "occupation": ["unemployed", "worker", "farmer", "self-employed"],
+      "category": ["general", "obc", "sc", "st", "other"],
+      "area": ["urban", "rural"]
+    },
+    "guidance": "Applicants from lower-income households can explore welfare-support opportunities matching their profile."
+  }
+]
