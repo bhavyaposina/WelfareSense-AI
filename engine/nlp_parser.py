@@ -26,22 +26,31 @@ def parse_profile(text):
     )
     if match:
         name = re.split(
-            r"\s+(?:i am|i'm|my age is)\b",
+            r"\s+(?:i am|i'm|and|my age is|age is)\b",
             match.group(1),
             maxsplit=1,
             flags=re.IGNORECASE
         )[0]
         profile["name"] = name.strip()
 
-    # Age: "20 years old", "20 years", "age 20"
+    # Age: 20 years old, 20 years, age 20, I am 20
     match = re.search(
-        r"\b(?:i am|i'm|age is|aged)?\s*(\d{1,3})"
-        r"\s*(?:years?\s*old|yrs?\s*old|years?|yrs?)\b",
+        r"\b(?:(?:i am|i'm|age is|aged)\s*)?"
+        r"(\d{1,3})\s*(?:years?\s*old|yrs?\s*old|years?|yrs?)\b",
         lower
     )
 
     if not match:
-        match = re.search(r"\b(?:age is|aged|age)\s*(\d{1,3})\b", lower)
+        match = re.search(
+            r"\b(?:age(?:\s+is)?|aged)\s*[:=]?\s*(\d{1,3})\b",
+            lower
+        )
+
+    if not match:
+        match = re.search(
+            r"\bi am\s+(\d{1,3})\b",
+            lower
+        )
 
     if match:
         age = int(match.group(1))
@@ -50,19 +59,23 @@ def parse_profile(text):
 
     # Annual income
     number_pattern = r"(\d+(?:,\d{3})*(?:\.\d+)?)"
+    unit_pattern = (
+        r"(lakh|lakhs|lac|lacs|crore|crores|"
+        r"thousand|thousands|k)?"
+    )
 
     income_patterns = [
-        rf"(?:annual\s+)?(?:income|earnings?|salary)"
-        rf"\s*(?:is|of|:|=)?\s*(?:rs\.?|inr|₹)?\s*"
-        rf"{number_pattern}\s*"
-        rf"(lakh|lakhs|lac|lacs|crore|crores|thousand|thousands|k)?",
+        rf"\b(?:annual\s+(?:family\s+)?income|family\s+income|"
+        rf"income|earnings?|salary)\s*"
+        rf"(?:is|of|:|=)?\s*(?:rs\.?|inr|₹)?\s*"
+        rf"{number_pattern}\s*{unit_pattern}\b",
 
-        rf"\b(?:rs\.?|inr|₹)\s*{number_pattern}\s*"
-        rf"(lakh|lakhs|lac|lacs|crore|crores|thousand|thousands|k)?",
+        rf"(?:rs\.?|inr|₹)\s*"
+        rf"{number_pattern}\s*{unit_pattern}\b",
 
         rf"\b{number_pattern}\s*"
-        rf"(lakh|lakhs|lac|lacs|crore|crores|thousand|thousands)"
-        rf"(?:\s+rupees?)?\b"
+        rf"(lakh|lakhs|lac|lacs|crore|crores|"
+        rf"thousand|thousands|k)\b"
     ]
 
     for pattern in income_patterns:
@@ -91,10 +104,10 @@ def parse_profile(text):
         ("daily wage worker", "daily wage worker"),
         ("unemployed", "unemployed"),
         ("job seeker", "job seeker"),
+        ("homemaker", "homemaker"),
         ("student", "student"),
         ("employee", "employee"),
-        ("farmer", "farmer"),
-        ("homemaker", "homemaker")
+        ("farmer", "farmer")
     ]
 
     for keyword, value in occupation_options:
@@ -102,7 +115,7 @@ def parse_profile(text):
             profile["occupation"] = value
             break
 
-    # Education: longer terms first to prevent partial matches
+    # Education
     education_options = [
         ("postgraduate", "postgraduate"),
         ("post graduate", "postgraduate"),
@@ -137,16 +150,18 @@ def parse_profile(text):
             profile["state"] = state.title()
             break
 
-    # Social category: use word boundaries so "sc" doesn't
-    # accidentally match letters inside unrelated words.
-    for keyword, value in [
-        ("general", "General"),
-        ("obc", "OBC"),
-        ("ews", "EWS"),
-        ("sc", "SC"),
-        ("st", "ST")
-    ]:
-        if re.search(r"\b" + re.escape(keyword) + r"\b", lower):
+    # Social category
+    category_patterns = [
+        (r"\bobc\b", "OBC"),
+        (r"\bsc\b", "SC"),
+        (r"\bst\b", "ST"),
+        (r"\bews\b", "EWS"),
+        (r"\bgeneral\s+category\b", "General"),
+        (r"\bgeneral\b", "General")
+    ]
+
+    for pattern, value in category_patterns:
+        if re.search(pattern, lower):
             profile["category"] = value
             break
 
@@ -159,14 +174,16 @@ def parse_profile(text):
     # Service type
     service_options = [
         ("scholarship", "scholarship"),
+        ("competitive exam", "exam"),
+        ("competitive examination", "exam"),
+        ("examination", "exam"),
         ("employment", "job"),
+        ("government job", "job"),
         ("job", "job"),
         ("welfare", "welfare"),
-        ("examination", "exam"),
-        ("competitive exam", "exam"),
-        ("exam", "exam"),
         ("skill development", "skill"),
-        ("skill", "skill")
+        ("skill", "skill"),
+        ("exam", "exam")
     ]
 
     for keyword, value in service_options:

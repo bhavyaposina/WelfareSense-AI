@@ -853,12 +853,25 @@ const storedData =
         ? data.results
         : [];
 
-    const user =
-        data.user ||
-        data.extracted_profile ||
-        data.extractedProfile ||
-        data.profile ||
-        {};
+    const profileCandidates = [
+    data.user,
+    data.extracted_profile,
+    data.extractedProfile,
+    data.profile,
+    data.user_profile
+];
+
+const user = profileCandidates.find(profile =>
+    profile &&
+    typeof profile === "object" &&
+    !Array.isArray(profile) &&
+    Object.values(profile).some(value =>
+        value !== null &&
+        value !== undefined &&
+        String(value).trim() !== "" &&
+        value !== 0
+    )
+) || {};
 
     console.log("WelfareSense result:", data);
     console.log("Profile data:", user);
